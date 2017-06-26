@@ -12,17 +12,10 @@ use PHPUnit\Framework\TestCase;
 
 class MathTest extends TestCase
 {
-    /** @var  Math */
-    protected $math;
-    
-    public function setUp()
-    {
-        $this->math = new Math();
-    }
-
     public function testEmptyNumber()
     {
-        $this->assertSame((float) 0, $this->math->getNumber());
+        $math = new Math();
+        $this->assertSame((float) 0, $math->getNumber());
     }
 
     /**
@@ -30,9 +23,9 @@ class MathTest extends TestCase
      */
     public function testSumNumber(float $firstNum, float $secondNum, float $result)
     {
-        $this->math->sum($firstNum);
-        $this->math->sum($secondNum);
-        $this->assertSame($result, $this->math->getNumber());
+        $math = new Math($firstNum);
+        $math->sum($secondNum);
+        $this->assertSame($result, $math->getNumber());
     }
 
     public function sumProvider()
@@ -46,22 +39,31 @@ class MathTest extends TestCase
 
     public function testSubstractNumber()
     {
-        $this->math->sum(2);
-        $this->math->substract(1);
-        $this->assertSame((float) 1, $this->math->getNumber());
+        $math = new Math(2);
+        $math->substract(1);
+        $this->assertSame((float) 1, $math->getNumber());
     }
 
     public function testDivideNumber()
     {
-        $this->math->sum(6);
-        $this->math->divide(2);
-        $this->assertSame((float) 3, $this->math->getNumber());
+        $math = new Math(6);
+        $math->divide(2);
+        $this->assertSame((float) 3, $math->getNumber());
     }
 
     public function testMultiplyNumber()
     {
-        $this->math->sum(5);
-        $this->math->multiply(4);
-        $this->assertSame((float) 20, $this->math->getNumber());
+        $math = new Math(5);
+        $math->multiply(4);
+        $this->assertSame((float) 20, $math->getNumber());
+    }
+
+    public function testProductCartPriceWithFloatingPrecision()
+    {
+        $math = new Math(80.1);
+        $math->sum(10.1);
+        $math->sum(9.8);
+
+        $this->assertSame((float) 100, $math->getNumber());
     }
 }
