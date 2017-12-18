@@ -12,20 +12,13 @@ use PHPUnit\Framework\TestCase;
 
 class MathTest extends TestCase
 {
-    public function testEmptyNumber()
-    {
-        $math = new Math();
-        $this->assertSame((float) 0, $math->getNumber());
-    }
-
     /**
      * @dataProvider sumProvider
      */
     public function testSumNumber(float $firstNum, float $secondNum, float $result)
     {
-        $math = new Math($firstNum);
-        $math->sum($secondNum);
-        $this->assertSame($result, $math->getNumber());
+        $math = new Math();
+        $this->assertSame($result, $math->sum($firstNum, $secondNum));
     }
 
     public function sumProvider()
@@ -39,31 +32,25 @@ class MathTest extends TestCase
 
     public function testSubstractNumber()
     {
-        $math = new Math(2);
-        $math->substract(1);
-        $this->assertSame((float) 1, $math->getNumber());
+        $math = new Math();
+        $this->assertSame((float) 1, $math->substract(2, 1));
     }
 
     public function testDivideNumber()
     {
-        $math = new Math(6);
-        $math->divide(2);
-        $this->assertSame((float) 3, $math->getNumber());
+        $math = new Math();
+        $this->assertSame((float) 3, $math->divide(6, 2));
     }
 
     public function testMultiplyNumber()
     {
-        $math = new Math(5);
-        $math->multiply(4);
-        $this->assertSame((float) 20, $math->getNumber());
+        $math = new Math();
+        $this->assertSame((float) 20, $math->multiply(5, 4));
     }
 
     public function testProductCartPriceWithFloatingPrecision()
     {
-        $math = new Math(80.1);
-        $math->sum(10.1);
-        $math->sum(9.8);
-
-        $this->assertSame((float) 100, $math->getNumber());
+        $math = new Math();
+        $this->assertSame((float) 100, $math->sum(9.8, $math->sum(80.1, 10.1)));
     }
 }
